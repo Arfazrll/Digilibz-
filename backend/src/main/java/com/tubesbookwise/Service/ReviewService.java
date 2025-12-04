@@ -1,6 +1,5 @@
 package com.tubesbookwise.Service;
 
-import com.tubesbookwise.Service.BookService;
 import com.tubesbookwise.Service.User.UserService;
 import com.tubesbookwise.dto.Review.ReviewDTO;
 import com.tubesbookwise.dto.Review.ReviewRequest;
@@ -13,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 
@@ -35,7 +36,7 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    public List<ReviewDTO> getReview(String bookId, Integer max) {
+    public List<ReviewDTO> getReview(@Nullable String bookId, @Nullable Integer max) {
         if (max == null) {
             max = 5;
         }
@@ -58,8 +59,7 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
-
-    public ResponseEntity<?> submitReview(ReviewRequest reviewRequest) {
+    public ResponseEntity<?> submitReview(@NonNull ReviewRequest reviewRequest) {
         String bookId = reviewRequest.getBookId();
         String userId = reviewRequest.getReview().getAuthorId();
 

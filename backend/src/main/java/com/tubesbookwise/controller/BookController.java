@@ -1,24 +1,23 @@
 package com.tubesbookwise.controller;
 
 import com.tubesbookwise.Models.Book;
-import com.tubesbookwise.Models.Review;
-import com.tubesbookwise.Models.User;
 import com.tubesbookwise.Service.BookService;
 import com.tubesbookwise.Service.ReviewService;
-import com.tubesbookwise.dto.Review.ReviewContent;
 import com.tubesbookwise.dto.Review.ReviewDTO;
-import com.tubesbookwise.dto.User.UserResponseDTO;
 import com.tubesbookwise.exception.ApiException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/books")
@@ -33,9 +32,9 @@ public class BookController {
     @Operation(summary = "Get all books", description = "Retrieve all books with optional filters")
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks(
-            @RequestParam(value = "search", required = false) String search,
-            @RequestParam(value = "category", required = false) String category,
-            @RequestParam(value = "years", required = false) Integer years
+            @RequestParam(value = "search", required = false) @Nullable String search,
+            @RequestParam(value = "category", required = false) @Nullable String category,
+            @RequestParam(value = "years", required = false) @Nullable Integer years
     ) {
         List<Book> books = bookService.getAllBooks(search, category, years);
         return ResponseEntity.ok(books);
@@ -44,7 +43,7 @@ public class BookController {
     @Operation(summary = "Get recommended books", description = "Retrieve recommended books with max data filters")
     @GetMapping("/recommended")
     public ResponseEntity<List<Book>> getRecommendedBooks(
-            @RequestParam(value = "max", required = false) Integer max
+            @RequestParam(value = "max", required = false) @Nullable Integer max
     ) {
         List<Book> books = bookService.getRecommendedBooks(max);
         return ResponseEntity.ok(books);
@@ -53,8 +52,8 @@ public class BookController {
     @Operation(summary = "Get book by ID", description = "Retrieve a book by its ID")
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getBookById(
-            @Parameter(description = "ID of the book to retrieve", required = true) @PathVariable String id,
-            @RequestParam(value = "max", required = false) Integer max
+            @Parameter(description = "ID of the book to retrieve", required = true) @PathVariable @NonNull String id,
+            @RequestParam(value = "max", required = false) @Nullable Integer max
     ) {
         Book book = bookService.getBookById(id)
                 .orElseThrow(() -> new ApiException("No value present", HttpStatus.NOT_FOUND));
@@ -67,15 +66,14 @@ public class BookController {
         return ResponseEntity.ok(response);
     }
 
-
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody Book book) {
+    public ResponseEntity<Book> addBook(@RequestBody @NonNull Book book) {
         Book createdBook = bookService.addBook(book);
         return ResponseEntity.ok(createdBook);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book book) {
+    public ResponseEntity<Book> updateBook(@PathVariable @NonNull String id, @RequestBody @NonNull Book book) {
         try {
             Book updatedBook = bookService.updateBook(id, book);
             return ResponseEntity.ok(updatedBook);
@@ -88,7 +86,7 @@ public class BookController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBook(
             @Parameter(description = "ID of the book to delete", required = true)
-            @PathVariable String id
+            @PathVariable @NonNull String id
     ) {
         if (!bookService.existsById(id)) {
             throw new ApiException("No value present", HttpStatus.NOT_FOUND);
@@ -104,5 +102,4 @@ public class BookController {
 
         return ResponseEntity.ok(response);
     }
-
 }

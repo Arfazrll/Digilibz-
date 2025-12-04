@@ -2,12 +2,13 @@ package com.tubesbookwise.Service.User;
 
 import com.tubesbookwise.Models.User;
 import com.tubesbookwise.dto.User.LecturerRequestDTO;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LecturerService extends UserService {
 
-    public User registerLecturer(LecturerRequestDTO lecturerDTO) {
+    public User registerLecturer(@NonNull LecturerRequestDTO lecturerDTO) {
         if (userRepository.existsByEmail(lecturerDTO.getEmail())) {
             throw new IllegalArgumentException("Email sudah digunakan.");
         }
@@ -21,7 +22,7 @@ public class LecturerService extends UserService {
         return userRepository.save(user);
     }
 
-    public User updateLecturer(User newLecturer, String id) {
+    public User updateLecturer(@NonNull User newLecturer, @NonNull String id) {
         return userRepository.findById(id)
                 .map(existingUser -> {
                     if (newLecturer.getEmail() != null && !newLecturer.getEmail().equals(existingUser.getEmail())) {

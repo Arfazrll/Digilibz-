@@ -4,7 +4,7 @@ import com.tubesbookwise.Models.Notification;
 import com.tubesbookwise.Models.User;
 import com.tubesbookwise.Repository.NotificationRepository;
 import com.tubesbookwise.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,17 +17,16 @@ public class NotificationsService {
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
 
-    @Autowired
     public NotificationsService(NotificationRepository notificationRepository, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
         this.userRepository = userRepository;
     }
 
-    public List<Notification> getNotificationsByUserId(String userId) {
+    public List<Notification> getNotificationsByUserId(@NonNull String userId) {
         return notificationRepository.findByUserId(userId);
     }
 
-    public Notification addNotification(User user, String title, String message, Notification.NotificationType type) {
+    public Notification addNotification(@NonNull User user, @NonNull String title, @NonNull String message, @NonNull Notification.NotificationType type) {
         Notification notification = new Notification();
         notification.setUser(user);
         notification.setTitle(title);
@@ -39,7 +38,7 @@ public class NotificationsService {
         return notificationRepository.save(notification);
     }
 
-    public Notification markAsRead(String notificationId) {
+    public Notification markAsRead(@NonNull String notificationId) {
         Optional<Notification> optionalNotification = notificationRepository.findById(notificationId);
 
         if (optionalNotification.isPresent()) {
@@ -51,12 +50,12 @@ public class NotificationsService {
         }
     }
 
-    public User getUserById(String userId) {
+    public User getUserById(@NonNull String userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " not found"));
     }
 
-    public void deleteNotification(String notifId) {
+    public void deleteNotification(@NonNull String notifId) {
         if (notificationRepository.existsById(notifId)) {
             notificationRepository.deleteById(notifId);
         } else {

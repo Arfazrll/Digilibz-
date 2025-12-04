@@ -2,16 +2,15 @@ package com.tubesbookwise.Service.User;
 
 import com.tubesbookwise.Models.User;
 import com.tubesbookwise.Repository.UserRepository;
-import com.tubesbookwise.dto.User.AllUserRequestDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -23,18 +22,18 @@ public class UserService {
     @Autowired
     protected PasswordEncoder passwordEncoder;
 
-    public Optional<User> findById(String id) {
+    public Optional<User> findById(@NonNull String id) {
         return Optional.ofNullable(userRepository.findById(id).orElse(null));
     }
 
-    public List<User> findAll(String role) {
+    public List<User> findAll(@Nullable String role) {
         if (role != null && !role.isEmpty()) {
             return userRepository.findAllByRole(User.Role.valueOf(role));
         }
         return userRepository.findAll();
     }
 
-    public void deleteById(String id) {
+    public void deleteById(@NonNull String id) {
         userRepository.deleteById(id);
     }
 
@@ -48,7 +47,7 @@ public class UserService {
     @Autowired
     private StudentService studentService;
 
-    public User updateUser(User newUser, String id) {
+    public User updateUser(@NonNull User newUser, @NonNull String id) {
         switch (newUser.getRole()) {
             case admin:
                 return adminService.updateAdmin(newUser, id);

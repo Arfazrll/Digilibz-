@@ -2,12 +2,13 @@ package com.tubesbookwise.Service.User;
 
 import com.tubesbookwise.Models.User;
 import com.tubesbookwise.dto.User.UserRequestDTO;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AdminService extends UserService {
 
-    public User registerAdmin(UserRequestDTO adminDTO) {
+    public User registerAdmin(@NonNull UserRequestDTO adminDTO) {
         if (userRepository.existsByEmail(adminDTO.getEmail())) {
             throw new IllegalArgumentException("Email sudah digunakan.");
         }
@@ -20,7 +21,7 @@ public class AdminService extends UserService {
         return userRepository.save(user);
     }
 
-    public User updateAdmin(User newAdmin, String id) {
+    public User updateAdmin(@NonNull User newAdmin, @NonNull String id) {
         return userRepository.findById(id)
                 .map(existingUser -> {
                     if (newAdmin.getEmail() != null && !newAdmin.getEmail().equals(existingUser.getEmail())) {
