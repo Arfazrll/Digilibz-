@@ -4,7 +4,6 @@ import com.tubesbookwise.Models.User;
 import com.tubesbookwise.Service.AuthService;
 import com.tubesbookwise.dto.AuthRequest;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,6 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @Autowired
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
@@ -29,7 +27,6 @@ public class AuthController {
             User user = authService.login(loginRequest.getEmail(), loginRequest.getPassword());
             String token = authService.generateToken(user);
 
-            // Create a response map
             Map<String, Object> response = new HashMap<>();
             response.put("id", user.getId());
             response.put("email", user.getEmail());
@@ -50,7 +47,6 @@ public class AuthController {
             User user = authService.loginAdmin(loginRequest.getEmail(), loginRequest.getPassword());
             String token = authService.generateToken(user);
 
-            // Create a response map
             Map<String, Object> response = new HashMap<>();
             response.put("id", user.getId());
             response.put("email", user.getEmail());

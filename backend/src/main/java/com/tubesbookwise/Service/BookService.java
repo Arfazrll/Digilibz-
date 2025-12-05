@@ -1,7 +1,6 @@
 package com.tubesbookwise.Service;
 
 import com.tubesbookwise.Models.Book;
-import com.tubesbookwise.Models.User;
 import com.tubesbookwise.Repository.BookRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

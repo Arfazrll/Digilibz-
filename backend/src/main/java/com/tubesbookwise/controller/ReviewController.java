@@ -1,6 +1,5 @@
 package com.tubesbookwise.controller;
 
-import com.tubesbookwise.Models.Review;
 import com.tubesbookwise.Service.ReviewService;
 import com.tubesbookwise.dto.Review.ReviewDTO;
 import com.tubesbookwise.dto.Review.ReviewRequest;

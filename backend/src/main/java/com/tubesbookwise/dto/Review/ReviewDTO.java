@@ -1,26 +1,22 @@
 package com.tubesbookwise.dto.Review;
 
-import com.tubesbookwise.Models.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Setter
 @Getter
 public class ReviewDTO {
 
-    // Getters and Setters
-    private UUID id;
+    private String id;
     private String bookTitle;
     private String authorName;
     private LocalDateTime date;
     private double rating;
     private String content;
 
-    // Constructor for the DTO
-    public ReviewDTO(UUID id, String bookTitle, String authorName, LocalDateTime date, double rating, String content) {
+    public ReviewDTO(String id, String bookTitle, String authorName, LocalDateTime date, double rating, String content) {
         this.id = id;
         this.bookTitle = bookTitle;
         this.authorName = authorName;
@@ -29,11 +25,11 @@ public class ReviewDTO {
         this.content = content;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

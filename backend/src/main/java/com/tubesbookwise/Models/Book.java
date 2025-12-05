@@ -22,19 +22,15 @@ public class Book {
     @Column(name = "id", nullable = false, unique = true)
     private String id;
 
-    @Setter
     @Column(name = "title", nullable = false, length = 255)
     private String title;
 
-    @Setter
     @Column(name = "author", nullable = false, length = 255)
     private String author;
 
-    @Setter
     @Column(name = "category", length = 255)
     private String category;
 
-    @Setter
     @Column(name = "year")
     private int year;
 
@@ -86,125 +82,5 @@ public class Book {
         map.put("canBorrow", this.canBorrow);
         map.put("rating", this.rating);
         return map;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public int getQuota() {
-        return quota;
-    }
-
-    public void setQuota(int quota) {
-        this.quota = quota;
-    }
-
-    public String getRackNumber() {
-        return rackNumber;
-    }
-
-    public void setRackNumber(String rackNumber) {
-        this.rackNumber = rackNumber;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public int getAvailableCopies() {
-        return availableCopies;
-    }
-
-    public void setAvailableCopies(int availableCopies) {
-        this.availableCopies = availableCopies;
-    }
-
-    public BigDecimal getLateFee() {
-        return lateFee;
-    }
-
-    public void setLateFee(BigDecimal lateFee) {
-        this.lateFee = lateFee;
-    }
-
-    public boolean isCanBorrow() {
-        return canBorrow;
-    }
-
-    public void setCanBorrow(boolean canBorrow) {
-        this.canBorrow = canBorrow;
-    }
-
-    public BigDecimal getRating() {
-        return rating;
-    }
-
-    public void setRating(BigDecimal rating) {
-        this.rating = rating;
     }
 }

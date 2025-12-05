@@ -4,7 +4,6 @@ import com.tubesbookwise.Models.Notification;
 import com.tubesbookwise.Models.User;
 import com.tubesbookwise.Repository.NotificationRepository;
 import com.tubesbookwise.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,7 +16,6 @@ public class NotificationsService {
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
 
-    @Autowired
     public NotificationsService(NotificationRepository notificationRepository, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
         this.userRepository = userRepository;

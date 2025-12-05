@@ -1,6 +1,5 @@
 package com.tubesbookwise.Service;
 
-import com.tubesbookwise.Service.BookService;
 import com.tubesbookwise.Service.User.UserService;
 import com.tubesbookwise.dto.Review.ReviewDTO;
 import com.tubesbookwise.dto.Review.ReviewRequest;
@@ -57,7 +56,6 @@ public class ReviewService {
                 ))
                 .collect(Collectors.toList());
     }
-
 
     public ResponseEntity<?> submitReview(ReviewRequest reviewRequest) {
         String bookId = reviewRequest.getBookId();

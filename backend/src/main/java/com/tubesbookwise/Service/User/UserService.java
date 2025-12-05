@@ -2,16 +2,13 @@ package com.tubesbookwise.Service.User;
 
 import com.tubesbookwise.Models.User;
 import com.tubesbookwise.Repository.UserRepository;
-import com.tubesbookwise.dto.User.AllUserRequestDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service

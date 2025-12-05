@@ -3,16 +3,12 @@ package com.tubesbookwise.controller;
 import com.tubesbookwise.Models.Notification;
 import com.tubesbookwise.Models.User;
 import com.tubesbookwise.Service.NotificationsService;
-import com.tubesbookwise.Service.User.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/notifications")
@@ -20,7 +16,6 @@ public class NotificationController {
 
     private final NotificationsService notificationsService;
 
-    @Autowired
     public NotificationController(NotificationsService notificationsService) {
         this.notificationsService = notificationsService;
     }
@@ -56,7 +51,7 @@ public class NotificationController {
             @RequestParam(value = "type", required = true) Notification.NotificationType type
     ) {
         try {
-            User user = notificationsService.getUserById(userId); // Assumes a method to fetch User by ID exists in service
+            User user = notificationsService.getUserById(userId);
             Notification newNotification = notificationsService.addNotification(user, title, message, type);
             return ResponseEntity.ok().body(newNotification);
         } catch (IllegalArgumentException e) {
