@@ -1,13 +1,12 @@
 package com.tubesbookwise.Service;
 
 import com.tubesbookwise.Models.Book;
+import com.tubesbookwise.Models.User;
 import com.tubesbookwise.Repository.BookRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,7 +20,7 @@ public class BookService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Book> getAllBooks(@Nullable String search, @Nullable String category, @Nullable Integer years) {
+    public List<Book> getAllBooks(String search, String category, Integer years) {
         StringBuilder jpql = new StringBuilder("SELECT b FROM Book b WHERE 1=1");
         Map<String, Object> parameters = new HashMap<>();
 
@@ -47,15 +46,15 @@ public class BookService {
         return query.getResultList();
     }
 
-    public Optional<Book> getBookById(@NonNull String id) {
+    public Optional<Book> getBookById(String id) {
         return Optional.ofNullable(bookRepository.findById(id).orElse(null));
     }
 
-    public Book addBook(@NonNull Book book) {
+    public Book addBook(Book book) {
         return bookRepository.save(book);
     }
 
-    public Book updateBook(@NonNull String id, @NonNull Book updatedBook) {
+    public Book updateBook(String id, Book updatedBook) {
         return bookRepository.findById(id).map(existingBook -> {
             existingBook.setTitle(updatedBook.getTitle());
             existingBook.setAuthor(updatedBook.getAuthor());
@@ -75,15 +74,15 @@ public class BookService {
         }).orElseThrow(() -> new RuntimeException("Book not found"));
     }
 
-    public void deleteById(@NonNull String id) {
+    public void deleteById(String id) {
         bookRepository.deleteById(id);
     }
 
-    public boolean existsById(@NonNull String id) {
+    public boolean existsById(String id) {
         return bookRepository.existsById(id);
     }
 
-    public List<Book> getRecommendedBooks(@Nullable Integer max) {
+    public List<Book> getRecommendedBooks(Integer max) {
         String jpql = "SELECT b FROM Book b ORDER BY FUNCTION('RAND')";
 
         TypedQuery<Book> query = entityManager.createQuery(jpql, Book.class);

@@ -8,8 +8,6 @@ import com.tubesbookwise.Repository.BookRepository;
 import com.tubesbookwise.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +33,7 @@ public class TransactionService {
     private NotificationsService notificationService;
 
      @Transactional
-     public String createTransaction(@NonNull TransactionRequest transactionRequest) {
+     public String createTransaction(TransactionRequest transactionRequest) {
          User user = userRepository.findById(transactionRequest.getUserId())
                  .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -94,11 +92,11 @@ public class TransactionService {
      }
 
      @Transactional
-     public Map<String, Object> getTransactionByInvoiceCode(@NonNull String invoiceCode) {
+     public Map<String, Object> getTransactionByInvoiceCode(String invoiceCode) {
          Transaction transaction = transactionRepository.findByInvoiceCode(invoiceCode)
                  .orElseThrow(() -> new RuntimeException("Transaction not found"));
 
-         transaction.getUser().getName();
+         transaction.getUser().getName(); // Trigger lazy loading
          transaction.getItems().size();
 
          return Map.of(
@@ -126,7 +124,7 @@ public class TransactionService {
          );
      }
 
-     private Map<String, Object> mapTransactionItemToResponse(@NonNull TransactionItem transactionItem) {
+     private Map<String, Object> mapTransactionItemToResponse(TransactionItem transactionItem) {
          return Map.of(
                  "id", transactionItem.getBook().getId(),
                  "title", transactionItem.getBook().getTitle(),
@@ -137,7 +135,7 @@ public class TransactionService {
      }
 
      @Transactional
-     public List<Map<String, Object>> getTransactionsWithFilter(@Nullable String search, @Nullable String status, @Nullable String type, @Nullable String userId) {
+     public List<Map<String, Object>> getTransactionsWithFilter(String search, String status, String type, String userId) {
          List<Transaction> transactions = transactionRepository.findAll().stream()
                  .filter(transaction ->
                           (status == null || status.equalsIgnoreCase("all") || transaction.getStatus().toString().equalsIgnoreCase(status)) &&
@@ -154,7 +152,7 @@ public class TransactionService {
                  .collect(Collectors.toList());
      }
 
-     private Map<String, Object> mapTransactionToResponse(@NonNull Transaction transaction) {
+     private Map<String, Object> mapTransactionToResponse(Transaction transaction) {
          return Map.of(
                  "id", transaction.getId(),
                  "invoiceCode", transaction.getInvoiceCode(),
@@ -181,7 +179,7 @@ public class TransactionService {
      }
 
     @Transactional
-    public void updateTransactionStatus(@NonNull String invoiceCode, @NonNull String status, @NonNull String typeIn) {
+    public void updateTransactionStatus(String invoiceCode, String status, String typeIn) {
         Transaction transaction = transactionRepository.findByInvoiceCode(invoiceCode)
                 .orElseThrow(() -> new IllegalArgumentException("Transaksi dengan kode invoice tidak ditemukan"));
 
